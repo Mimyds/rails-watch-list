@@ -1,7 +1,24 @@
 <h1> <%= @list.name %></h1>
 
 
+    <% @list.movies.each do |movie|  %>
+<div class="card mb-3" style="max-width: 540px;">
 
+    <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+      <div class="col-md-4">
+        <%= image_tag movie.poster_url, alt: "movie-poster", width: 200 %>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"> <%= movie.title %> </h5>
+          <p class="card-text"> <%= movie.overview %> </p>
+          <span class="badge bg-light rounded-pill"><%= "⭐️"*movie.rating %></span>
+          <p class="card-text"> <%= bookmark.comment %> </p>
+          <p> <%= link_to "Delete", bookmark_path(bookmark), method: :delete %>  </p>
+        </div>
+      </div>
 
+</div>
+    <% end %>
 
 <%= link_to "Add a bookmark", new_list_bookmark_path(@list) %>
